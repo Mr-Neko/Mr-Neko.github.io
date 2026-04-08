@@ -1,329 +1,735 @@
 <!DOCTYPE html>
-<!-- saved from url=(0055)https://www.starlg.cn/TianliangZhang/TianliangZhang.htm -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta content="IE=5.0000" http-equiv="X-UA-Compatible">
-  <meta name="description" content="Yiwei Ma&#39;s home page">
-  
-  <link href="./imgs/tlzdoc.css" rel="stylesheet" type="text/css">
-  <title>Haowei Wang's Homepage</title>
-  <meta name="GENERATOR" content="MSHTML 11.00.10570.1001">
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Haowei Wang's Homepage</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', 'Segoe UI', system-ui, sans-serif; color: #333; background: #fafafa; }
+
+  .wrapper { display: flex; max-width: 1160px; margin: 0 auto; min-height: 100vh; }
+
+  /* ========== Sidebar ========== */
+  .sidebar {
+    width: 280px; background: linear-gradient(180deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+    color: #fff; padding: 48px 28px 36px; flex-shrink: 0;
+    position: sticky; top: 0; height: 100vh;
+    display: flex; flex-direction: column; align-items: center;
+    overflow: hidden;
+  }
+  /* Particle canvas in sidebar */
+  #particles-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+  .sidebar > *:not(#particles-canvas) { position: relative; z-index: 1; }
+
+  .sidebar .avatar {
+    width: 140px; height: 140px; border-radius: 50%;
+    border: 3px solid rgba(255,255,255,.25); object-fit: cover; margin-bottom: 20px;
+    transition: transform .4s, box-shadow .4s;
+  }
+  .sidebar .avatar:hover { transform: scale(1.08); box-shadow: 0 0 24px rgba(255,255,255,.25); }
+  .sidebar h1 { font-size: 1.3rem; text-align: center; margin-bottom: 4px; }
+  .sidebar .cn-name { font-size: .95rem; opacity: .7; margin-bottom: 16px; }
+  .sidebar .affiliation { font-size: .82rem; opacity: .75; text-align: center; line-height: 1.5; margin-bottom: 24px; }
+  .sidebar nav a {
+    display: block; padding: 10px 18px; color: rgba(255,255,255,.8); text-decoration: none;
+    font-size: .88rem; border-radius: 6px; margin-bottom: 2px; transition: all .25s;
+    position: relative; overflow: hidden;
+  }
+  .sidebar nav a::before {
+    content: ''; position: absolute; left: 0; top: 0; width: 3px; height: 100%;
+    background: #58a6ff; transform: scaleY(0); transition: transform .25s; border-radius: 0 2px 2px 0;
+  }
+  .sidebar nav a:hover { background: rgba(255,255,255,.1); color: #fff; padding-left: 24px; }
+  .sidebar nav a:hover::before { transform: scaleY(1); }
+  .sidebar .social { margin-top: auto; display: flex; gap: 14px; }
+  .sidebar .social a { color: rgba(255,255,255,.6); text-decoration: none; font-size: .82rem; transition: color .2s; }
+  .sidebar .social a:hover { color: #fff; }
+
+  /* ========== Main ========== */
+  .main { flex: 1; padding: 48px 44px 60px; overflow-x: hidden; }
+  section { margin-bottom: 48px; }
+  section h2 {
+    font-size: 1.4rem; color: #0f2027; margin-bottom: 18px; padding-bottom: 8px;
+    border-bottom: 2px solid #2c5364; display: flex; align-items: center; gap: 8px;
+  }
+  section h3 { font-size: 1rem; color: #2c5364; margin: 20px 0 12px; font-weight: 600; }
+
+  /* ========== Scroll-in animation ========== */
+  .fade-in { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* ========== Typewriter ========== */
+  .typewriter { display: inline-block; }
+  .typewriter .cursor { display: inline-block; width: 2px; height: 1em; background: #2c5364; margin-left: 2px; animation: blink .7s step-end infinite; vertical-align: text-bottom; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* ========== Bio ========== */
+  .bio { font-size: .94rem; line-height: 1.8; }
+  .bio p { margin-bottom: .7em; }
+  .bio a { color: #2c5364; text-decoration: none; border-bottom: 1px dashed #93c5d8; transition: border-color .2s; }
+  .bio a:hover { border-bottom-color: #2c5364; }
+  .timeline { list-style: none; padding-left: 0; border-left: 2px solid #d1dce5; margin-left: 8px; }
+  .timeline li { padding: 6px 0 6px 18px; position: relative; font-size: .9rem; }
+  .timeline li::before {
+    content: ''; position: absolute; left: -7px; top: 14px;
+    width: 12px; height: 12px; border-radius: 50%; background: #2c5364; border: 2px solid #fff;
+    transition: transform .3s;
+  }
+  .timeline li:hover::before { transform: scale(1.4); }
+
+  /* ========== News ========== */
+  .alert { background: linear-gradient(90deg, #fff5f5, #fed7d7); border-left: 4px solid #e53e3e; padding: 12px 18px; border-radius: 6px; margin-bottom: 16px; font-size: .9rem; color: #c53030; font-weight: 600; }
+  .news-list { list-style: none; padding: 0; }
+  .news-list li { padding: 8px 0; border-bottom: 1px solid #edf2f7; font-size: .9rem; }
+  .news-list li:last-child { border: none; }
+  .news-list .date { color: #2c5364; font-weight: 600; margin-right: 8px; }
+
+  /* ========== Publication cards ========== */
+  .pub-item {
+    display: flex; gap: 18px; padding: 16px; background: #fff; border-radius: 10px;
+    margin-bottom: 12px; border: 1px solid #e8ecf1;
+    transition: transform .25s, box-shadow .25s;
+  }
+  .pub-item:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.07); }
+  .pub-item img { width: 160px; height: 80px; object-fit: cover; border-radius: 6px; flex-shrink: 0; }
+  .pub-item .info { flex: 1; }
+  .pub-item .title { font-weight: 700; font-size: .92rem; color: #1a202c; margin-bottom: 3px; }
+  .pub-item .authors { font-size: .82rem; color: #555; margin-bottom: 3px; }
+  .pub-item .authors .me { color: #c69026; font-weight: 600; }
+  .pub-item .venue { font-size: .82rem; color: #888; font-style: italic; margin-bottom: 6px; }
+  .pub-item .links a {
+    display: inline-block; font-size: .78rem; color: #fff; background: #2c5364;
+    padding: 2px 10px; border-radius: 12px; text-decoration: none; margin-right: 6px;
+    transition: background .2s, transform .2s;
+  }
+  .pub-item .links a:hover { background: #203a43; transform: translateY(-1px); }
+
+  /* ========== Awards ========== */
+  .awards-list { list-style: none; padding: 0; }
+  .awards-list li { padding: 10px 14px; background: #fff; border-radius: 6px; margin-bottom: 8px; font-size: .9rem; border-left: 4px solid #2c5364; transition: padding-left .3s; }
+  .awards-list li:hover { padding-left: 22px; }
+
+  /* ========== Visitor Stats ========== */
+  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 24px; }
+  .stat-card {
+    background: #fff; border: 1px solid #e8ecf1; border-radius: 10px; padding: 18px 16px; text-align: center;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .stat-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,.06); }
+  .stat-card .stat-number { font-size: 1.8rem; font-weight: 700; color: #2c5364; font-variant-numeric: tabular-nums; }
+  .stat-card .stat-label { font-size: .78rem; color: #888; margin-top: 4px; }
+
+  /* Globe */
+  .globe-section { display: flex; gap: 20px; margin-bottom: 20px; }
+  .globe-wrap { flex-shrink: 0; width: 220px; height: 220px; position: relative; }
+  #globe-canvas { width: 100%; height: 100%; }
+  .visit-log { flex: 1; background: #fff; border: 1px solid #e8ecf1; border-radius: 10px; padding: 14px 16px; max-height: 220px; overflow-y: auto; }
+  .visit-log h4 { font-size: .85rem; color: #2c5364; margin-bottom: 8px; }
+  .visit-log .log-item { font-size: .78rem; color: #555; padding: 4px 0; border-bottom: 1px solid #f0f2f5; display: flex; justify-content: space-between; }
+  .visit-log .log-item:last-child { border: none; }
+  .log-ip { font-family: 'SF Mono', monospace; color: #2c5364; }
+  .log-loc { color: #888; }
+  .log-time { color: #aaa; font-size: .72rem; }
+
+  /* Chart */
+  .chart-wrap { background: #fff; border: 1px solid #e8ecf1; border-radius: 10px; padding: 18px; }
+  .chart-wrap h4 { font-size: .85rem; color: #2c5364; margin-bottom: 12px; }
+  .chart-bar-group { display: flex; align-items: flex-end; gap: 6px; height: 120px; }
+  .chart-col { flex: 1; display: flex; flex-direction: column; align-items: center; }
+  .chart-bar {
+    width: 100%; border-radius: 4px 4px 0 0;
+    background: linear-gradient(180deg, #2c5364, #4ca1af);
+    transition: height 1s cubic-bezier(.4,0,.2,1);
+    position: relative;
+  }
+  .chart-bar .tooltip {
+    position: absolute; top: -22px; left: 50%; transform: translateX(-50%);
+    background: #1a202c; color: #fff; font-size: .68rem; padding: 2px 6px; border-radius: 3px;
+    opacity: 0; transition: opacity .2s; white-space: nowrap;
+  }
+  .chart-bar:hover .tooltip { opacity: 1; }
+  .chart-label { font-size: .68rem; color: #888; margin-top: 6px; }
+
+  /* Spinning globe ping dot */
+  @keyframes ping { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(2.5); opacity: 0; } }
+  .ping { animation: ping 1.5s cubic-bezier(0,0,.2,1) infinite; }
+
+  /* ========== Responsive ========== */
+  @media (max-width: 768px) {
+    .wrapper { flex-direction: column; }
+    .sidebar { width: 100%; height: auto; position: static; flex-direction: row; flex-wrap: wrap; justify-content: center; padding: 24px; }
+    .sidebar nav { display: flex; flex-wrap: wrap; gap: 4px; }
+    .sidebar .social { margin-top: 12px; }
+    .main { padding: 24px 16px; }
+    .pub-item { flex-direction: column; }
+    .pub-item img { width: 100%; height: auto; }
+    .stats-grid { grid-template-columns: 1fr; }
+    .globe-section { flex-direction: column; }
+    .globe-wrap { width: 100%; }
+  }
+</style>
 </head>
-
-
 <body>
-  <div id="layout-content" style="margin-top: 25px;">
-  <table>
-    <tbody>
-    <tr>
-      <td>
-        <img width="130" src="./imgs/HWW.png" border="3">
-      </td>	
-      <td width="670">
-        <div id="toptitle">
-        <h1>Haowei Wang &nbsp; 王昊为<a name="top"></a></h1>
-		</div>
-        <h3>Third-year Postgraduated Student at Xiamen University        </h3>
-        <p> 
-        <br> Email:
-        <a href="wanghaowei@stu.xmu.edu.cn">wanghaowei@stu.xmu.edu.cn</a>		
-        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	&nbsp;&nbsp;<a href="https://github.com/Mr-Neko" target="_blank">[Github]</a>
-	&nbsp;&nbsp;<a href="https://scholar.google.com.hk/citations?user=SkV_NNsAAAAJ&hl=zh-CN" target="_blank">[Google Scholar]</a>	
-  <!--      &nbsp;&nbsp;<a href="#" target="_blank">[Ph.D. Thesis, in Chinese]</a>		-->
-        <br><br></p>
-      </td>
-    </tr>
-    <tr></tr></tbody>
-  </table>
-  <div id="layout-content" style="margin-top: 25px;">
 
+<div class="wrapper">
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar">
+    <canvas id="particles-canvas"></canvas>
+    <img class="avatar" src="./imgs/HWW.png" alt="Haowei Wang">
+    <h1>Haowei Wang</h1>
+    <div class="cn-name">王昊为</div>
+    <div class="affiliation">Third-year Postgraduate<br>Dept. of Artificial Intelligence<br>Xiamen University</div>
+    <nav>
+      <a href="#biography">Biography</a>
+      <a href="#news">Latest News</a>
+      <a href="#publications">Publications</a>
+      <a href="#awards">Awards</a>
+      <a href="#visitor-stats">Visitor Stats</a>
+    </nav>
+    <div class="social">
+      <a href="mailto:wanghaowei@stu.xmu.edu.cn">📧 Email</a>
+      <a href="https://github.com/Mr-Neko" target="_blank">🐙 Github</a>
+      <a href="https://scholar.google.com.hk/citations?user=SkV_NNsAAAAJ&hl=zh-CN" target="_blank">🎓 Scholar</a>
+    </div>
+  </aside>
 
-<h4>[<a style=" color:#9D849A;" href="#biography">Biography</a>] [<a style=" color:#9D849A;" href="#news">Latest News</a>] 
-  [<a style=" color:#9D849A;" href="#publications">Publications</a>] 
-[<a style=" color:#9D849A;" href="#projects">Projects</a>] 
-[<a style=" color:#9D849A;" href="#awards">Major Awards</a>] 
-[<a style=" color:#9D849A;" href="#patent">Patent</a>] 
-[<a style=" color:#9D849A;" href="#activities">Professional Activities</a>]</h4>
+  <!-- ===== MAIN ===== -->
+  <main class="main">
 
-<h2>Biography<a name="biography"></a>&nbsp;&nbsp;&nbsp;<a style=" color:#9D849A; font-size:15px;" href="#top">[back top]</a></h2>
-  <p style="text-indent:2em;"> I am currently a third-year postgraduated student in <a href="https://cogsci.xmu.edu.cn/" target="_blank">Department of Artificial Intelligence</a>, <a href="https://informatics.xmu.edu.cn/" target="_blank">School of Informatics</a>, <a href="https://en.xmu.edu.cn/" target="_blank">Xiamen University</a>, advised by <a href="https://sites.google.com/view/xssun" target="_blank">Prof. Xiaoshuai Sun</a> and <a href="https://mac.xmu.edu.cn/rrji_en/" target="_blank">Prof. Rongrong Ji</a>  .
-  </p>
-  <p style="text-indent:2em;">My recent research interests are in (2D/3D) vision-and-language learning.</p>
+    <!-- Biography -->
+    <section id="biography" class="bio fade-in">
+      <h2>
+        <span class="typewriter"><span id="bio-title"></span><span class="cursor"></span></span>
+      </h2>
+      <p>I am currently a third-year postgraduate student in the <a href="https://cogsci.xmu.edu.cn/" target="_blank">Department of Artificial Intelligence</a>, <a href="https://informatics.xmu.edu.cn/" target="_blank">School of Informatics</a>, <a href="https://en.xmu.edu.cn/" target="_blank">Xiamen University</a>, advised by <a href="https://sites.google.com/view/xssun" target="_blank"><b>Prof. Xiaoshuai Sun</b></a> and <a href="https://mac.xmu.edu.cn/rrji_en/" target="_blank"><b>Prof. Rongrong Ji</b></a>.</p>
+      <p>My recent research interests are in <b>(2D/3D) vision-and-language learning</b>.</p>
+      <ul class="timeline">
+        <li>09/2021 – Now: M.S. in Artificial Intelligence, Xiamen University</li>
+        <li>01/2023 – 07/2023: Multi-modal Research Intern, Netease Fuxi AI Lab</li>
+        <li>09/2017 – 06/2021: B.S. in Intelligent Science and Technology, Xiamen University</li>
+      </ul>
+    </section>
 
-<ul>  
-  <!-- <li> 09/2023 -- Now: Ph.D. in Intelligence Science and Technology, <a href="https://en.xmu.edu.cn/" target="_blank">Xiamen University</a>, Xiamen, China</li>    -->
-  <li> 09/2021 -- Now: M.S. in Artificial Intelligence, <a href="https://en.xmu.edu.cn/" target="_blank">Xiamen University</a>, Xiamen, Fujian provience, China</li>   
-  <li> 01/2023 -- 07/2023: Multi-modal Research Intern, <a href="https://fuxi.163.com/" target="_blank">Netease Fuxi AI Lab</a>, Hangzhou, China </li>
-  <!-- <li> 09/2018 -- 06/2021: M.S. in Computer Technology, <a href="https://en.xmu.edu.cn/" target="_blank">Xiamen University</a>, Xiamen, China </li>   -->
-  <li> 09/2017 -- 06/2021: B.S. in Intelligent Science and Technology, <a href="https://en.xmu.edu.cn/" target="_blank">Xiamen University</a>, Xiamen, Fujian provience, China </li>
-</ul>
+    <!-- News -->
+    <section id="news" class="fade-in">
+      <h2>Latest News</h2>
+      <div class="alert">🔍 I'm looking for a Ph.D. position. If you are interested in my research and can provide full-cover funding, please contact me!</div>
+      <ul class="news-list">
+        <li><span class="date">12/2023</span> Two papers accepted by <i>AAAI 2024</i></li>
+        <li><span class="date">07/2023</span> Two papers accepted by <i>ACM MM 2023</i></li>
+        <li><span class="date">07/2023</span> One paper accepted by <i>ICCV 2023</i></li>
+      </ul>
+    </section>
 
-<h2>Latest News<a name="news"></a>&nbsp;&nbsp;&nbsp;<a style=" color:#9D849A; font-size:15px;" href="#top">[back top]</a></h2>
-<ul> 
-<li style=“color:#F00;”> &#129488 I'm looking for Ph.D position. If you are interested in my research and can provide full-cover fund, please contract with me !!! </li>
+    <!-- Publications -->
+    <section id="publications" class="fade-in">
+      <h2>Publications</h2>
 
-  <li> 12/2023: Two paper accepted by <i>AAAI</i></li>
-  <li> 07/2023: Two papers accepted by <i>ACM MM</i></li>
-  <li> 07/2023: One paper accepted by <i>ICCV</i></li>
-  <!-- <li> 02/2023: One paper accepted by IEEE Access</li> -->
-  <!-- <li> 06/2022: One paper accepted by ACM MM</li>
-  <li> 05/2022: One paper accepted by IEEE TIP</li>
-  <li> 04/2022: One paper accepted by IEEE TMM</li>   -->
-</ul>
+      <h3>Conference</h3>
 
+      <div class="pub-item fade-in">
+        <img src="./imgs/conference/XPNG.png" alt="">
+        <div class="info">
+          <div class="title">Improving Panoptic Narrative Grounding by Harnessing Semantic Relationships and Visual Confirmation</div>
+          <div class="authors">Tianyu Guo, <span class="me">Haowei Wang</span>, Yiwei Ma, Xiaoshuai Sun</div>
+          <div class="venue">AAAI 2024</div>
+        </div>
+      </div>
 
-<h2>Publications<a name="publications"></a>&nbsp;&nbsp;&nbsp;<a style=" color:#9D849A; font-size:15px;" href="#top">[back top]</a></h2>
-<!-- <h3>Journal</h3>
-<table class="pub_table">
-  <tbody>
+      <div class="pub-item fade-in">
+        <img src="./imgs/conference/3D-STMN.png" alt="">
+        <div class="info">
+          <div class="title">3D-STMN: Dependency-Driven Superpoint-Text Matching Network for End-to-End 3D Referring Expression Segmentation</div>
+          <div class="authors">Changli Wu, Yiwei Ma, Qi Chen, <span class="me">Haowei Wang</span>, Gen Luo, Jiayi Ji, Xiaoshuai Sun</div>
+          <div class="venue">AAAI 2024</div>
+          <div class="links"><a href="https://arxiv.org/abs/2308.16632" target="_blank">arXiv</a><a href="https://github.com/sosppxo/3D-STMN" target="_blank">Code</a></div>
+        </div>
+      </div>
 
-    <tr>
-      <td class="pub_td1"> <img src="./imgs/LSTNet.png" class="papericon"></td>
-      <td class="pub_td2">  <font color="goldenrod">Yiwei Ma</font>, Jiayi Ji, Xiaoshuai Sun<sup>✉</sup>, Yiyi Zhou, Rongrong Ji
-        <br><b>Towards Local Visual Modeling for Image Captioning</b>
-        <br>Pattern Recognition (PR), 2023<br>
-        [<a href="https://www.sciencedirect.com/science/article/abs/pii/S0031320323001218" target="_blank">PDF</a>]	
-        [<a href="https://arxiv.org/abs/2302.06098" target="_blank">ArXiv</a>]	
-        [<a href="https://github.com/xmu-xiaoma666/LSTNet" target="_blank">Code</a>]	
-      </td>
-    </tr>   	 
-   
-    <tr>
-      <td class="pub_td1"> <img src="./imgs/RAS-FSG.png" class="papericon"></td>
-      <td class="pub_td2"> Yinan Li, <font color="goldenrod">Yiwei Ma</font>, Yiyi Zhou,  Xiao Yu<sup>✉</sup>,
-        <br><b>Semantic-Guided Selective Representation for Image Captioning</b>
-        <br>IEEE Access, 2023<br>
-        [<a href="https://ieeexplore.ieee.org/document/10041895" target="_blank">PDF</a>]	
-      </td>
-    </tr>   	 
+      <div class="pub-item fade-in">
+        <img src="./imgs/conference/JM3D.png" alt="">
+        <div class="info">
+          <div class="title">Beyond First Impressions: Integrating Joint Multi-modal Cues for Comprehensive 3D Representation</div>
+          <div class="authors"><span class="me">Haowei Wang</span>, Jiji Tang, Jiayi Ji, Xiaoshuai Sun, Rongsheng Zhang, Yiwei Ma, Minda Zhao, Lincheng Li, Zeng Zhao, Tangjie Lv, Rongrong Ji</div>
+          <div class="venue">ACM MM 2023</div>
+          <div class="links"><a href="https://arxiv.org/abs/2308.02982" target="_blank">arXiv</a><a href="https://github.com/Mr-Neko/JM3D" target="_blank">Code</a></div>
+        </div>
+      </div>
 
-  <tr>
-    <td class="pub_td1"> <img src="./imgs/EMFM.png" class="papericon"></td>
-    <td class="pub_td2"> Jiayi Ji, <font color="goldenrod">Yiwei Ma (co-frist author)</font>, Xiaoshuai Sun<sup>✉</sup>, Yiyi Zhou, Yongjian Wu, Rongrong Ji
-      <br><b>Knowing What to Learn: A Metric-oriented Focal Mechanism for Image Captioning</b>
-      <br>IEEE Transactions on Image Processing (TIP), 2022<br>
-      [<a href="https://ieeexplore.ieee.org/document/9802801" target="_blank">PDF</a>]	
-      [<a href="https://github.com/xmu-xiaoma666/MFM" target="_blank">Code</a>]	
-    </td>
-  </tr>   	 
+      <div class="pub-item fade-in">
+        <img src="./imgs/conference/SSPNG.png" alt="">
+        <div class="info">
+          <div class="title">Semi-Supervised Panoptic Narrative Grounding</div>
+          <div class="authors">Danni Yang, Jiayi Ji, Xiaoshuai Sun, <span class="me">Haowei Wang</span>, Yinan Li, Yiwei Ma, Rongrong Ji</div>
+          <div class="venue">ACM MM 2023</div>
+          <div class="links"><a href="https://github.com/nini0919/SSPNG" target="_blank">Code</a></div>
+        </div>
+      </div>
 
+      <div class="pub-item fade-in">
+        <img src="./imgs/conference/XMesh.png" alt="">
+        <div class="info">
+          <div class="title">X-Mesh: Towards Fast and Accurate Text-driven 3D Stylization via Dynamic Textual Guidance</div>
+          <div class="authors">Yiwei Ma, Xiaoqing Zhang, Xiaoshuai Sun, Jiayi Ji, <span class="me">Haowei Wang</span>, Guannan Jiang, Weilin Zhuang, Rongrong Ji</div>
+          <div class="venue">ICCV 2023</div>
+          <div class="links"><a href="https://arxiv.org/abs/2303.15764" target="_blank">arXiv</a><a href="https://github.com/xmu-xiaoma666/X-Mesh" target="_blank">Code</a><a href="https://xmu-xiaoma666.github.io/Projects/X-Mesh/" target="_blank">Project</a></div>
+        </div>
+      </div>
 
-  <tr>
-    <td class="pub_td1"> <img src="./imgs/SDATR.png" class="papericon"></td>
-    <td class="pub_td2"> <font color="goldenrod">Yiwei Ma</font>, Jiayi Ji, Xiaoshuai Sun<sup>✉</sup>, Yiyi Zhou, Yongjian Wu, Feiyue Huang, Rongrong Ji
-      <br><b>Knowing what it is: Semantic-enhanced Dual Attention Transformer</b>
-      <br>IEEE Transactions on Multimedia (TMM), 2022<br>
-      [<a href="https://ieeexplore.ieee.org/document/9749944" target="_blank">PDF</a>]	 
-      [<a href="https://github.com/xmu-xiaoma666/SDATR" target="_blank">Code</a>]                    
-    </td>
-  </tr>   	 
+      <div class="pub-item fade-in">
+        <img src="./imgs/conference/EPNG.png" alt="">
+        <div class="info">
+          <div class="title">Towards Real-Time Panoptic Narrative Grounding by an End-to-End Grounding Network</div>
+          <div class="authors"><span class="me">Haowei Wang</span>, Jiayi Ji, Yiyi Zhou, Yongjian Wu, Xiaoshuai Sun</div>
+          <div class="venue">AAAI 2023</div>
+          <div class="links"><a href="https://ojs.aaai.org/index.php/AAAI/article/view/25350" target="_blank">PDF</a><a href="https://arxiv.org/abs/2301.03160" target="_blank">arXiv</a><a href="https://github.com/Mr-Neko/EPNG" target="_blank">Code</a></div>
+        </div>
+      </div>
 
+      <h3>Preprint</h3>
 
-  </tbody>
-</table> -->
+      <div class="pub-item fade-in">
+        <img src="./imgs/conference/JM3D-LLM.png" alt="">
+        <div class="info">
+          <div class="title">JM3D & JM3D-LLM: Elevating 3D Representation with Joint Multi-modal Cues</div>
+          <div class="authors">Jiayi Ji, <span class="me">Haowei Wang</span>, Changli Wu, Yiwei Ma, Xiaoshuai Sun, Rongrong Ji</div>
+          <div class="venue">Under review</div>
+          <div class="links"><a href="https://arxiv.org/abs/2310.09503" target="_blank">arXiv</a><a href="https://github.com/Mr-Neko/JM3D" target="_blank">Code</a></div>
+        </div>
+      </div>
 
+      <div class="pub-item fade-in">
+        <img src="./imgs/conference/NICE.png" alt="">
+        <div class="info">
+          <div class="title">NICE: Improving Panoptic Narrative Detection and Segmentation with Cascading Collaborative Learning</div>
+          <div class="authors"><span class="me">Haowei Wang</span>, Jiayi Ji, Tianyu Guo, Yilong Yang, Yiyi Zhou, Xiaoshuai Sun, Rongrong Ji</div>
+          <div class="venue">Under review</div>
+          <div class="links"><a href="https://arxiv.org/abs/2310.10975" target="_blank">arXiv</a><a href="https://github.com/Mr-Neko/NICE" target="_blank">Code</a></div>
+        </div>
+      </div>
+    </section>
 
-<h3>Conference</h3>
-<table class="pub_table">
-  <tbody>
+    <!-- Awards -->
+    <section id="awards" class="fade-in">
+      <h2>Major Awards</h2>
+      <ul class="awards-list">
+        <li>🏅 National Scholarship, China, 2023</li>
+        <li>🎖️ Merit Student of Xiamen University, China, 2023</li>
+        <li>🏆 Outstanding Student Scholarship (Grade 1), Xiamen University, 2018–2020</li>
+      </ul>
+    </section>
 
-	<tr>
-		<td class="pub_td1"> <img src="./imgs/conference/XPNG.png" class="papericon"></td>
-		<td class="pub_td2">Tianyu Guo, <font color="goldenrod">Haowei Wang</font>, Yiwei Ma, Xiaoshuai Sun<sup>✉</sup>
-		  <br><b>Improving Panoptic Narrative Grounding by Harnessing Semantic Relationships and Visual Confirmation</b>
-		  <br>Proceedings of the AAAI Conference on Artificial Intelligence (AAAI), 2024
-		  <br>
-		<!-- [<a href="https://arxiv.org/abs/2308.16632" target="_blank">arXiv</a>]  -->
-		<!-- [<a href="https://github.com/Mr-Neko/JM3D" target="_blank">Code</a>]   -->
-		</td>
-	  </tr>
+    <!-- Visitor Stats -->
+    <section id="visitor-stats" class="fade-in">
+      <h2>📊 Visitor Statistics</h2>
 
-	<tr>
-		<td class="pub_td1"> <img src="./imgs/conference/3D-STMN.png" class="papericon"></td>
-		<td class="pub_td2">Changli Wu, Yiwei Ma, Qi Chen, <font color="goldenrod">Haowei Wang</font>, Gen Luo, Jiayi Ji<sup>✉</sup>, Xiaoshuai Sun
-		  <br><b>3D-STMN: Dependency-Driven Superpoint-Text Matching Network for End-to-End 3D Referring Expression Segmentation</b>
-		  <br>Proceedings of the AAAI Conference on Artificial Intelligence (AAAI), 2024
-		  <br>
-		  [<a href="https://arxiv.org/abs/2308.16632" target="_blank">arXiv</a>] 
-		[<a href="https://github.com/sosppxo/3D-STMN" target="_blank">Code</a>]  
-		<!-- [<a href="https://xmu-xiaoma666.github.io/Projects/X-Mesh/" target="_blank">Project Page</a>] -->
-	
-		</td>
-	  </tr>   
+      <!-- Counters — first card uses visitor-badge (real), others from localStorage -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" id="counter-total">
+            <img id="visitor-badge" src="https://visitor-badge.laobi.icu/badge?page_id=Mr-Neko.github.io.homepage&left_color=%232c5364&right_color=%234ca1af&left_text=visits" alt="visitors" style="height:28px;vertical-align:middle;">
+          </div>
+          <div class="stat-label">Total Visits (real-time)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="counter-unique">-</div>
+          <div class="stat-label">Unique Visitors</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="counter-countries">-</div>
+          <div class="stat-label">Countries / Regions</div>
+        </div>
+      </div>
 
+      <!-- Globe + Live Log -->
+      <div class="globe-section">
+        <div class="globe-wrap">
+          <canvas id="globe-canvas"></canvas>
+        </div>
+        <div class="visit-log">
+          <h4>🟢 Recent Visitors</h4>
+          <div id="live-log">
+            <div class="log-item" style="color:#aaa;justify-content:center;">Loading real visitor data…</div>
+          </div>
+        </div>
+      </div>
 
-    <tr>
-      <td class="pub_td1"> <img src="./imgs/conference/JM3D.png" class="papericon"></td>
-      <td class="pub_td2"><font color="goldenrod">Haowei Wang</font>, Jiji Tang, Jiayi Ji, Xiaoshuai Sun<sup>✉</sup>, Rongsheng Zhang, Yiwei Ma, Minda Zhao, Lincheng Li, Zeng Zhao, Tangjie Lv, Rongrong Ji
-        <br><b>Beyond First Impressions: Integrating Joint Multi-modal Cues for Comprehensive 3D Representation</b>
-        <br>ACM International Conference on Multimedia (ACM MM), 2023<br>
-      [<a href="#" target="_blank">PDF Comming</a>] 
-      [<a href="https://arxiv.org/abs/2308.02982" target="_blank">arXiv</a>] 
-      [<a href="https://github.com/Mr-Neko/JM3D" target="_blank">Code</a>]  
-      </td>
-    </tr>  
+      <!-- Your visit info -->
+      <div class="chart-wrap fade-in" id="your-visit-card">
+        <h4>🌍 Your Visit</h4>
+        <div id="your-visit-info" style="font-size:.88rem;color:#555;">Detecting your location…</div>
+      </div>
 
+      <!-- Trend chart -->
+      <div class="chart-wrap fade-in" style="margin-top:16px;">
+        <h4>📈 Recent Visit Trend (last 7 entries)</h4>
+        <div class="chart-bar-group" id="weekly-chart"></div>
+      </div>
+    </section>
 
-    <tr>
-      <td class="pub_td1"> <img src="./imgs/conference/SSPNG.png" class="papericon"></td>
-      <td class="pub_td2">Danni Yang, Jiayi Ji<sup>✉</sup>, Xiaoshuai Sun, <font color="goldenrod">Haowei Wang</font>, Yinan Li, Yiwei Ma, Rongrong Ji
-        <br><b>Semi-Supervised Panoptic Narrative Grounding</b>
-        <br>ACM International Conference on Multimedia (ACM MM), 2023<br>
-      [<a href="#" target="_blank">PDF Comming</a>] 
-      [<a href=" https://github.com/nini0919/SSPNG" target="_blank">Code</a>]  
-      </td>
-    </tr>  
-
-
-    <tr>
-      <td class="pub_td1"> <img src="./imgs/conference/XMesh.png" class="papericon"></td>
-      <td class="pub_td2">Yiwei Ma, Xiaoqing Zhang, Xiaoshuai Sun<sup>✉</sup>, Jiayi Ji, <font color="goldenrod">Haowei Wang</font>, Guannan Jiang, Weilin Zhuang, Rongrong Ji
-        <br><b>X-Mesh:Towards Fast and Accurate Text-driven 3D Stylization via Dynamic Textual Guidance</b>
-        <br>IEEE International Conference on Computer Vision (ICCV), 2023<br>
-      [<a href="https://arxiv.org/abs/2303.15764" target="_blank">arXiv</a>] 
-      [<a href="https://github.com/xmu-xiaoma666/X-Mesh" target="_blank">Code</a>]  
-      [<a href="https://xmu-xiaoma666.github.io/Projects/X-Mesh/" target="_blank">Project Page</a>]
-      </td>
-    </tr>    
-
-
-  <tr>
-    <td class="pub_td1"> <img src="./imgs/conference/EPNG.png" class="papericon"></td>
-    <td class="pub_td2"> <font color="goldenrod">Haowei Wang</font>, Jiayi Ji, Yiyi Zhou, Yongjian Wu, Xiaoshuai Sun<sup>✉</sup>
-      <br><b>Towards Real-Time Panoptic Narrative Grounding by an End-to-End Grounding Network</b>
-      <br>Proceedings of the AAAI Conference on Artificial Intelligence (AAAI), 2023<br>
-      [<a href="https://ojs.aaai.org/index.php/AAAI/article/view/25350" target="_blank">PDF</a>]	 
-       [<a href="https://arxiv.org/abs/2301.03160" target="_blank">arXiv</a>]
-      [<a href="https://github.com/Mr-Neko/EPNG" target="_blank">Code</a>]  
-    </td>
-  </tr>
-
-
-  </tbody>
-</table>
-
-<h3>Preprint</h3>
-
-<table class="pub_table">
-  <tbody>
-	  <!-- Waiting ... -->
-
-  <tr>
-    <td class="pub_td1"> <img src="./imgs/conference/JM3D-LLM.png" class="papericon"></td>
-    <td class="pub_td2">Jiayi Ji, <font color="goldenrod">Haowei Wang</font>, Changli Wu, Yiwei Ma, Xiaoshuai Sun, Rongrong Ji<sup>✉</sup>
-      <br><b>JM3D & JM3D-LLM: Elevating 3D Representation with Joint Multi-modal Cues</b>
-      <br>Under review
-      <br>
-    [<a href="https://arxiv.org/abs/2310.09503" target="_blank">arXiv</a>]
-    [<a href="https://github.com/Mr-Neko/JM3D" target="_blank">Code</a>]  
-    </td>
-  </tr>
-
-
-  <tr>
-    <td class="pub_td1"> <img src="./imgs/conference/NICE.png" class="papericon"></td>
-    <td class="pub_td2"><font color="goldenrod">Haowei Wang</font>, Jiayi Ji, Tianyu Guo, Yilong Yang, Yiyi Zhou, Xiaoshuai Sun<sup>✉</sup>, Rongrong Ji 
-      <br><b>NICE: Improving Panoptic Narrative Detection and Segmentation with Cascading Collaborative Learning</b>
-      <br>Under review
-      <br>
-	[<a href="https://arxiv.org/abs/2310.10975" target="_blank">arXiv</a>]
-    [<a href="https://github.com/Mr-Neko/NICE" target="_blank">Code</a>]  
-    </td>
-  </tr>      
-
-
-  </tbody>
-</table>
-
-
-
-<!-- <h2>Projects<a name="projects"></a>&nbsp;&nbsp;&nbsp;<a style=" color:#9D849A; font-size:15px;" href="#top">[back top]</a></h2>
-<h3></h3>
-<table class="pub_table">
-
-  <tr>
-    <td class="pub_td1"> <img src="./imgs/attention_git.png" class="papericon"></td>
-    <td class="pub_td2"> 
-      <br><b>External-Attention-pytorch</b>
-      <br>Pytorch implementation of various Attention Mechanisms, MLP, Re-parameter, Convolution, which is helpful to further understand papers.<br>
-      [<a href="https://github.com/xmu-xiaoma666/External-Attention-pytorch" target="_blank">github </a>] <font color="#FF0000"><i>(9300+ stars)</i></font>  
-    </td>
-  </tr>
-
-
-</table>
-
-
-
-<h2>Patent<a name="patent"></a>&nbsp;&nbsp;&nbsp;<a style=" color:#9D849A; font-size:15px;" href="#top">[back top]</a></h2>
-<h3></h3>
-<table class="pub_table">
-
-  <tr>
-    <td class="pub_td1"> <img src="./patent/XMesh.png" class="papericon"></td>
-    <td class="pub_td2"> 
-      <br><b>基于动态文本引导的文本驱动3D风格化方法</b>
-      <br>CN116704090A<br>
-      [<a href="https://www.baiten.cn/patent/detail/84129a8ff543f9fa1697375de7b1af074ca8c13bb7a43aaf?sc=&fq=&type=&sort=&sortField=&q=%E9%A9%AC%E7%A5%8E%E7%82%9C+%E5%8E%A6%E9%97%A8%E5%A4%A7%E5%AD%A6&rows=10#1/CN202310669840.6/detail/abst" target="_blank">详情</a>] 
-    </td>
-  </tr>
-
-
-
-  <tr>
-    <td class="pub_td1"> <img src="./patent/XCLIP.jpg" class="papericon"></td>
-    <td class="pub_td2"> 
-      <br><b>面向视频文本检索的端到端多粒度对比学习方法</b>
-      <br>CN115757713A<br>
-      [<a href="https://www.baiten.cn/patent/detail/84129a8ff543f9fa1697375de7b1af074ca8c13bb7a43aaf?sc=&fq=&type=&sort=&sortField=&q=%E9%A9%AC%E7%A5%8E%E7%82%9C%2B%E5%8E%A6%E9%97%A8%E5%A4%A7%E5%AD%A6&rows=10#1/CN202211310816.5/detail/abst" target="_blank">详情</a>] 
-    </td>
-  </tr>
-
-  
-  <tr>
-    <td class="pub_td1"> <img src="./patent/caption1.jpg" class="papericon"></td>
-    <td class="pub_td2"> 
-      <br><b>面向局部视觉建模的图像描述生成方法</b>
-      <br>CN115964530A<br>
-      [<a href="https://www.baiten.cn/patent/detail/bb65a03c36e01639e02e6614b74adfc8271986998898c0b2?sc=&fq=&type=&sort=&sortField=&q=%E9%A9%AC%E7%A5%8E%E7%82%9C%2B%E5%8E%A6%E9%97%A8%E5%A4%A7%E5%AD%A6&rows=10#1/CN202310040601.4/detail/abst" target="_blank">详情</a>] 
-    </td>
-  </tr>
-
-
-  
-  <tr>
-    <td class="pub_td1"> <img src="./patent/BEAT.jpg" class="papericon"></td>
-    <td class="pub_td2"> 
-      <br><b>基于文本的人物检索的双向一对多嵌入对齐方法</b>
-      <br>CN116304145A<br>
-      [<a href="https://www.baiten.cn/patent/detail/84129a8ff543f9fa1697375de7b1af074ca8c13bb7a43aaf?sc=&fq=&type=&sort=&sortField=&q=%E9%A9%AC%E7%A5%8E%E7%82%9C%2B%E5%8E%A6%E9%97%A8%E5%A4%A7%E5%AD%A6&rows=10#1/CN202310298214.0/detail/abst" target="_blank">详情</a>] 
-    </td>
-  </tr>
-
-
-  
-
-
-</table> -->
-
-
-
-<h2>Major Awards<a name="awards"></a>&nbsp;&nbsp;&nbsp;<a style=" color:#9D849A; font-size:15px;" href="#top">[back top]</a></h2>
-<ul>
-  
-    <li>  National Scholarship, China, 2023  </li> 
-    <li>  Merit Student of Xiamen University, China, 2023  </li> 
-    <li>  Outstanding Student Scholarship (Grade 1) of Xiamen University, China, 2018-2020  </li> 
-</ul>
-
-<!-- <h2>Professional Activities<a name="activities"></a>&nbsp;&nbsp;&nbsp;<a style=" color:#9D849A; font-size:15px;" href="#top">[back top]</a></h2>
-<ul>
-  <li> Conference Reviewer: ACMMM 2023, ICCV 2023</li>
-  <li> Journal Reviewer: IEEE Transactions on Circuits and Systems for Video Technology </li> -->
-</ul>
-
-
+  </main>
 </div>
-</div>
+
+<script>
+
+/* =============================================
+   1. SIDEBAR PARTICLES
+   ============================================= */
+(function() {
+  const canvas = document.getElementById('particles-canvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  const COUNT = 45;
+
+  function resize() {
+    canvas.width = canvas.parentElement.offsetWidth;
+    canvas.height = canvas.parentElement.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  class Particle {
+    constructor() { this.reset(); }
+    reset() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.r = Math.random() * 2 + .5;
+      this.vx = (Math.random() - .5) * .3;
+      this.vy = (Math.random() - .5) * .3;
+      this.alpha = Math.random() * .4 + .1;
+    }
+    update() {
+      this.x += this.vx; this.y += this.vy;
+      if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+      if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+    }
+    draw() {
+      ctx.beginPath(); ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${this.alpha})`; ctx.fill();
+    }
+  }
+  for (let i = 0; i < COUNT; i++) particles.push(new Particle());
+
+  function drawLines() {
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 100) {
+          ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(255,255,255,${.12 * (1 - dist / 100)})`;
+          ctx.lineWidth = .6; ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => { p.update(); p.draw(); });
+    drawLines();
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+/* =============================================
+   2. TYPEWRITER EFFECT
+   ============================================= */
+(function() {
+  const el = document.getElementById('bio-title');
+  const text = 'Biography';
+  let i = 0;
+  function type() {
+    if (i < text.length) { el.textContent += text[i]; i++; setTimeout(type, 100); }
+  }
+  setTimeout(type, 500);
+})();
+
+/* =============================================
+   3. SCROLL FADE-IN (IntersectionObserver)
+   ============================================= */
+(function() {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+})();
+
+/* =============================================
+   4. REAL VISITOR TRACKING (localStorage + ipapi)
+   ============================================= */
+(function() {
+  const STORAGE_KEY = 'hww_visitor_log';
+  const MAX_LOG = 50;
+
+  // Read existing log from localStorage
+  function getLog() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch(e) { return []; }
+  }
+  function saveLog(log) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(log.slice(0, MAX_LOG)));
+  }
+
+  // Render stats from log
+  function renderStats(log) {
+    const uniqueIPs = new Set(log.map(v => v.ip));
+    const countries = new Set(log.map(v => v.country_code).filter(Boolean));
+    document.getElementById('counter-unique').textContent = uniqueIPs.size;
+    document.getElementById('counter-countries').textContent = countries.size;
+  }
+
+  // Render recent log
+  function renderLog(log) {
+    const container = document.getElementById('live-log');
+    container.innerHTML = '';
+    if (log.length === 0) {
+      container.innerHTML = '<div class="log-item" style="color:#aaa;justify-content:center;">No visitors recorded yet. You are the first!</div>';
+      return;
+    }
+    log.slice(0, 10).forEach(v => {
+      const div = document.createElement('div');
+      div.className = 'log-item';
+      const maskIP = v.ip ? v.ip.replace(/\.\d+$/, '.***') : 'unknown';
+      const loc = [v.city, v.country_code].filter(Boolean).join(', ') || 'Unknown';
+      const ago = timeAgo(v.timestamp);
+      div.innerHTML = `<span><span class="log-ip">${maskIP}</span> &nbsp; <span class="log-loc">${loc}</span></span><span class="log-time">${ago}</span>`;
+      container.appendChild(div);
+    });
+  }
+
+  // Render chart from log (group by date, last 7 days)
+  function renderChart(log) {
+    const container = document.getElementById('weekly-chart');
+    container.innerHTML = '';
+    const dayCounts = {};
+    log.forEach(v => {
+      const d = new Date(v.timestamp);
+      const key = `${d.getMonth()+1}/${d.getDate()}`;
+      dayCounts[key] = (dayCounts[key] || 0) + 1;
+    });
+    // Last 7 unique day keys
+    const allDays = [];
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(Date.now() - i * 86400000);
+      allDays.push(`${d.getMonth()+1}/${d.getDate()}`);
+    }
+    const values = allDays.map(k => dayCounts[k] || 0);
+    const max = Math.max(...values, 1);
+    allDays.forEach((day, i) => {
+      const col = document.createElement('div'); col.className = 'chart-col';
+      const bar = document.createElement('div'); bar.className = 'chart-bar'; bar.style.height = '0px';
+      const tooltip = document.createElement('span'); tooltip.className = 'tooltip'; tooltip.textContent = values[i];
+      bar.appendChild(tooltip);
+      const label = document.createElement('div'); label.className = 'chart-label'; label.textContent = day;
+      col.appendChild(bar); col.appendChild(label); container.appendChild(col);
+      const obs = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) {
+          setTimeout(() => { bar.style.height = (values[i] / max * 100) + 'px'; }, i * 100);
+          obs.unobserve(col);
+        }
+      }, { threshold: 0.3 });
+      obs.observe(col);
+    });
+  }
+
+  function timeAgo(ts) {
+    const diff = Math.floor((Date.now() - ts) / 1000);
+    if (diff < 5) return 'just now';
+    if (diff < 60) return diff + 's ago';
+    if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+    if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+    return Math.floor(diff / 86400) + 'd ago';
+  }
+
+  // Show current visitor info
+  function showYourVisit(data) {
+    const el = document.getElementById('your-visit-info');
+    el.innerHTML = `
+      <div style="display:flex;flex-wrap:wrap;gap:18px;align-items:center;">
+        <div>📍 <b>${data.city || 'Unknown'}, ${data.region || ''}, ${data.country_name || 'Unknown'}</b></div>
+        <div>🌐 IP: <code style="background:#f0f2f5;padding:2px 8px;border-radius:4px;">${data.ip ? data.ip.replace(/\.\d+$/, '.***') : 'N/A'}</code></div>
+        <div>🏢 ISP: ${data.org || 'N/A'}</div>
+        <div>🕐 Timezone: ${data.timezone || 'N/A'}</div>
+      </div>
+    `;
+  }
+
+  // Add current visitor to globe dynamically
+  function addToGlobe(data) {
+    if (data.latitude && data.longitude && window._globeAddVisitor) {
+      window._globeAddVisitor(data.latitude, data.longitude, data.city || 'You');
+    }
+  }
+
+  // Fetch real IP info
+  const log = getLog();
+  renderStats(log);
+  renderLog(log);
+  renderChart(log);
+
+  fetch('https://ipapi.co/json/')
+    .then(r => r.json())
+    .then(data => {
+      showYourVisit(data);
+
+      // Record this visit
+      const entry = {
+        ip: data.ip,
+        city: data.city,
+        region: data.region,
+        country_code: data.country_code,
+        country_name: data.country_name,
+        latitude: data.latitude,
+        longitude: data.longitude,
+        org: data.org,
+        timestamp: Date.now()
+      };
+      log.unshift(entry);
+      saveLog(log);
+      renderStats(log);
+      renderLog(log);
+      renderChart(log);
+      addToGlobe(data);
+    })
+    .catch(() => {
+      document.getElementById('your-visit-info').innerHTML = '<span style="color:#c53030;">Could not detect your location (API blocked or offline). Stats from cached history only.</span>';
+    });
+})();
+
+/* =============================================
+   5. ANIMATED GLOBE (Canvas) — with dynamic visitor support
+   ============================================= */
+(function() {
+  const canvas = document.getElementById('globe-canvas');
+  const ctx = canvas.getContext('2d');
+  const W = 220, H = 220;
+  canvas.width = W * 2; canvas.height = H * 2;
+  canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+  ctx.scale(2, 2);
+
+  const cx = W / 2, cy = H / 2, R = 80;
+  let rotation = 0;
+
+  // Decorative city dots
+  const decorDots = [
+    { lat: 24.48, lon: 118.09 }, { lat: 39.9, lon: 116.4 },
+    { lat: 31.23, lon: 121.47 }, { lat: 37.77, lon: -122.42 },
+    { lat: 51.5, lon: -0.12 }, { lat: 35.68, lon: 139.69 },
+    { lat: -33.87, lon: 151.21 }, { lat: 1.35, lon: 103.82 },
+    { lat: 48.86, lon: 2.35 }, { lat: 22.3, lon: 114.17 },
+    { lat: 52.52, lon: 13.4 }, { lat: 40.71, lon: -74.01 },
+  ];
+
+  // Real visitors (dynamically added)
+  const realVisitors = [];
+  window._globeAddVisitor = function(lat, lon, label) {
+    realVisitors.push({ lat, lon, label, time: Date.now() });
+  };
+
+  // Also load from localStorage
+  try {
+    const log = JSON.parse(localStorage.getItem('hww_visitor_log')) || [];
+    log.slice(0, 15).forEach(v => {
+      if (v.latitude && v.longitude) realVisitors.push({ lat: v.latitude, lon: v.longitude, label: v.city || '', time: v.timestamp });
+    });
+  } catch(e) {}
+
+  function toSphere(lat, lon) {
+    const phi = (90 - lat) * Math.PI / 180;
+    const theta = (lon + rotation) * Math.PI / 180;
+    return {
+      x: cx + R * Math.sin(phi) * Math.cos(theta),
+      y: cy - R * Math.cos(phi),
+      z: R * Math.sin(phi) * Math.sin(theta)
+    };
+  }
+
+  function drawGlobe() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Glow
+    const glow = ctx.createRadialGradient(cx, cy, R * .8, cx, cy, R * 1.3);
+    glow.addColorStop(0, 'rgba(44,83,100,.08)');
+    glow.addColorStop(1, 'transparent');
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, W, H);
+
+    // Circle
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(44,83,100,.06)'; ctx.fill();
+    ctx.strokeStyle = 'rgba(44,83,100,.25)'; ctx.lineWidth = 1.2; ctx.stroke();
+
+    // Latitude lines
+    for (let lat = -60; lat <= 60; lat += 30) {
+      ctx.beginPath();
+      for (let lon = 0; lon <= 360; lon += 3) {
+        const p = toSphere(lat, lon);
+        if (p.z < 0) continue;
+        ctx.moveTo(p.x, p.y); ctx.lineTo(p.x, p.y);
+      }
+      ctx.strokeStyle = 'rgba(44,83,100,.12)'; ctx.lineWidth = .5; ctx.stroke();
+    }
+
+    // Longitude lines
+    for (let lon = 0; lon < 360; lon += 30) {
+      ctx.beginPath();
+      for (let lat = -90; lat <= 90; lat += 3) {
+        const p = toSphere(lat, lon);
+        if (p.z < 0) continue;
+        ctx.lineTo(p.x, p.y);
+      }
+      ctx.strokeStyle = 'rgba(44,83,100,.12)'; ctx.lineWidth = .5; ctx.stroke();
+    }
+
+    const time = Date.now();
+
+    // Decorative dots (subtle)
+    decorDots.forEach((v, i) => {
+      const p = toSphere(v.lat, v.lon);
+      if (p.z < 0) return;
+      const alpha = .2 + .3 * (p.z / R);
+      ctx.beginPath(); ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(88,166,255,${alpha})`; ctx.fill();
+    });
+
+    // Real visitor dots (brighter, with ping)
+    realVisitors.forEach((v, i) => {
+      const p = toSphere(v.lat, v.lon);
+      if (p.z < 0) return;
+      const alpha = .5 + .5 * (p.z / R);
+
+      // Ping ring
+      const pingR = 3 + 5 * ((Math.sin(time / 700 + i * 1.5) + 1) / 2);
+      ctx.beginPath(); ctx.arc(p.x, p.y, pingR, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,140,50,${alpha * .15})`; ctx.fill();
+
+      // Dot (orange for real visitors)
+      ctx.beginPath(); ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,160,50,${alpha})`; ctx.fill();
+    });
+
+    rotation += .15;
+    requestAnimationFrame(drawGlobe);
+  }
+  drawGlobe();
+})();
+
+/* (Visitor log & chart are now rendered by section 4 above) */
+
+/* =============================================
+   8. SMOOTH SCROLL FOR NAV
+   ============================================= */
+document.querySelectorAll('.sidebar nav a').forEach(a => {
+  a.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
 </body>
 </html>
