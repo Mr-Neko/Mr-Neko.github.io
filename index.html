@@ -85,6 +85,34 @@
   .news-list li:last-child { border: none; }
   .news-list .date { color: #2c5364; font-weight: 600; margin-right: 8px; }
 
+  /* ========== Year accordion ========== */
+  .year-group { margin-bottom: 6px; }
+  .year-toggle {
+    display: flex; align-items: center; gap: 10px; cursor: pointer;
+    padding: 10px 14px; background: #fff; border: 1px solid #e8ecf1; border-radius: 8px;
+    transition: background .2s, box-shadow .2s; user-select: none;
+  }
+  .year-toggle:hover { background: #f0f6fa; box-shadow: 0 2px 8px rgba(0,0,0,.04); }
+  .year-toggle .year-label {
+    font-size: 1.05rem; font-weight: 700; color: #0f2027;
+  }
+  .year-toggle .year-count {
+    font-size: .75rem; color: #fff; background: #2c5364;
+    padding: 1px 9px; border-radius: 10px; min-width: 22px; text-align: center;
+  }
+  .year-toggle .year-arrow {
+    margin-left: auto; font-size: .7rem; color: #888;
+    transition: transform .3s;
+  }
+  .year-toggle.open .year-arrow { transform: rotate(180deg); }
+  .year-body {
+    max-height: 0; overflow: hidden; transition: max-height .45s cubic-bezier(.4,0,.2,1);
+    padding: 0 2px;
+  }
+  .year-body.open { max-height: 5000px; }
+  .year-body > .pub-item:first-child,
+  .year-body > .news-list { margin-top: 10px; }
+
   /* ========== Publication cards ========== */
   .pub-item {
     display: flex; gap: 18px; padding: 16px; background: #fff; border-radius: 10px;
@@ -215,25 +243,159 @@
     <section id="news" class="fade-in">
       <h2>Latest News</h2>
       <div class="alert">🔍 I'm looking for a Ph.D. position. If you are interested in my research and can provide full-cover funding, please contact me!</div>
-      <ul class="news-list">
-        <li><span class="date">12/2023</span> Two papers accepted by <i>AAAI 2024</i></li>
-        <li><span class="date">07/2023</span> Two papers accepted by <i>ACM MM 2023</i></li>
-        <li><span class="date">07/2023</span> One paper accepted by <i>ICCV 2023</i></li>
-      </ul>
+
+      <div class="year-group">
+        <div class="year-toggle open" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+          <span class="year-label">2025</span><span class="year-count">4</span><span class="year-arrow">▼</span>
+        </div>
+        <div class="year-body open">
+          <ul class="news-list">
+            <li><span class="date">12/2025</span> Two papers accepted by <i>AAAI 2026</i> (ZoomFakes, TripleFDS)</li>
+            <li><span class="date">09/2025</span> One paper accepted by <i>TPAMI 2025</i> (NICE)</li>
+            <li><span class="date">09/2025</span> One paper accepted by <i>TIFS 2025</i> (ME-FAS)</li>
+            <li><span class="date">07/2025</span> One paper accepted by <i>TOMM 2025</i> (X-Dreamer)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="year-group">
+        <div class="year-toggle open" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+          <span class="year-label">2024</span><span class="year-count">6</span><span class="year-arrow">▼</span>
+        </div>
+        <div class="year-body open">
+          <ul class="news-list">
+            <li><span class="date">09/2024</span> One paper accepted by <i>NeurIPS 2024</i> (RG-SAN)</li>
+            <li><span class="date">07/2024</span> One paper accepted by <i>ECCV 2024</i> (Exploring Phrase-Level Grounding)</li>
+            <li><span class="date">07/2024</span> One paper accepted by <i>ACM MM 2024</i> (3D-GRES)</li>
+            <li><span class="date">05/2024</span> One paper accepted by <i>ICML 2024</i> (SAM as the Guide)</li>
+            <li><span class="date">02/2024</span> One paper accepted by <i>CVPR 2024</i> (RMSIN)</li>
+            <li><span class="date">02/2024</span> One paper accepted by <i>TPAMI 2024</i> (JM3D & JM3D-LLM)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="year-group">
+        <div class="year-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+          <span class="year-label">2023</span><span class="year-count">3</span><span class="year-arrow">▼</span>
+        </div>
+        <div class="year-body">
+          <ul class="news-list">
+            <li><span class="date">12/2023</span> Two papers accepted by <i>AAAI 2024</i></li>
+            <li><span class="date">07/2023</span> Two papers accepted by <i>ACM MM 2023</i></li>
+            <li><span class="date">07/2023</span> One paper accepted by <i>ICCV 2023</i></li>
+          </ul>
+        </div>
+      </div>
     </section>
 
     <!-- Publications -->
     <section id="publications" class="fade-in">
       <h2>Publications</h2>
 
-      <h3>Conference</h3>
+      <!-- ===== 2026 ===== -->
+      <div class="year-group">
+        <div class="year-toggle open" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+          <span class="year-label">2026</span><span class="year-count">2</span><span class="year-arrow">▼</span>
+        </div>
+        <div class="year-body open">
 
       <div class="pub-item fade-in">
-        <img src="./imgs/conference/XPNG.png" alt="">
+        <img src="./imgs/conference/ZoomFakes.png" alt="">
         <div class="info">
-          <div class="title">Improving Panoptic Narrative Grounding by Harnessing Semantic Relationships and Visual Confirmation</div>
-          <div class="authors">Tianyu Guo, <span class="me">Haowei Wang</span>, Yiwei Ma, Xiaoshuai Sun</div>
-          <div class="venue">AAAI 2024</div>
+          <div class="title">Zooming In on Fakes: A Novel Dataset for Localized AI-Generated Image Detection with Forgery Amplification Approach</div>
+          <div class="authors">Lvpan Cai, <span class="me">Haowei Wang</span>, Jiayi Ji, Yicong Zhoumen, Shen Chen, Taiping Yao, Xiaoshuai Sun</div>
+          <div class="venue">AAAI 2026</div>
+          <div class="links"><a href="https://arxiv.org/abs/2504.11922" target="_blank">arXiv</a></div>
+        </div>
+      </div>
+
+      <div class="pub-item fade-in">
+        <img src="./imgs/conference/TripleFDS.png" alt="">
+        <div class="info">
+          <div class="title">TripleFDS: Triple Feature Disentanglement and Synthesis for Scene Text Editing</div>
+          <div class="authors">Yusen Bao, Yiting Wang, Wenhui Huang, <span class="me">Haowei Wang</span>, Shen Chen, Taiping Yao, Shouhong Ding, Jizhong Zhang</div>
+          <div class="venue">AAAI 2026</div>
+          <div class="links"><a href="https://arxiv.org/abs/2511.13399" target="_blank">arXiv</a><a href="https://github.com/yusenbao01/TripleFDS" target="_blank">Code</a></div>
+        </div>
+      </div>
+
+        </div>
+      </div>
+
+      <!-- ===== 2025 ===== -->
+      <div class="year-group">
+        <div class="year-toggle open" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+          <span class="year-label">2025</span><span class="year-count">4</span><span class="year-arrow">▼</span>
+        </div>
+        <div class="year-body open">
+
+      <div class="pub-item fade-in">
+        <img src="./imgs/conference/NICE.png" alt="">
+        <div class="info">
+          <div class="title">NICE: Improving Panoptic Narrative Detection and Segmentation with Cascading Collaborative Learning</div>
+          <div class="authors"><span class="me">Haowei Wang</span>, Jiayi Ji, Tianyu Guo, Yilong Yang, Xiaoshuai Sun, Rongrong Ji</div>
+          <div class="venue">IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI), 2025</div>
+          <div class="links"><a href="https://arxiv.org/abs/2310.10975" target="_blank">arXiv</a><a href="https://github.com/Mr-Neko/NICE" target="_blank">Code</a></div>
+        </div>
+      </div>
+
+      <div class="pub-item fade-in">
+        <img src="./imgs/conference/MEFAS.png" alt="">
+        <div class="info">
+          <div class="title">ME-FAS: Multimodal Text Enhancement for Cross-Domain Face Anti-Spoofing</div>
+          <div class="authors">Lvpan Cai, <span class="me">Haowei Wang</span>, Jiayi Ji, Xiaoshuai Sun, Liujuan Cao, Rongrong Ji</div>
+          <div class="venue">IEEE Transactions on Information Forensics and Security (TIFS), 2025</div>
+          <div class="links"><a href="https://github.com/clpbc/ME-FAS" target="_blank">Code</a></div>
+        </div>
+      </div>
+
+      <div class="pub-item fade-in">
+        <img src="./imgs/conference/XDreamer.png" alt="">
+        <div class="info">
+          <div class="title">Creating High-Quality 3D Content by Bridging the Gap between Text-to-2D and Text-to-3D Generation</div>
+          <div class="authors">Yiwei Ma, Yijun Fan, Jiayi Ji, <span class="me">Haowei Wang</span>, Hao Yin, Xiaoshuai Sun, Rongrong Ji</div>
+          <div class="venue">ACM Transactions on Multimedia Computing, Communications and Applications (TOMM), 2025</div>
+          <div class="links"><a href="https://arxiv.org/abs/2312.00085" target="_blank">arXiv</a></div>
+        </div>
+      </div>
+
+      <div class="pub-item fade-in">
+        <img src="./imgs/conference/RGSAN.png" alt="">
+        <div class="info">
+          <div class="title">RG-SAN: Rule-Guided Spatial Awareness Network for End-to-End 3D Referring Expression Segmentation</div>
+          <div class="authors">Changli Wu, Qi Chen, Jiayi Ji, <span class="me">Haowei Wang</span>, Yiwei Ma, You Huang, Haiwei Fei, Xiaoshuai Sun, Rongrong Ji</div>
+          <div class="venue">NeurIPS 2024</div>
+          <div class="links"><a href="https://arxiv.org/abs/2412.02402" target="_blank">arXiv</a><a href="https://github.com/sosppxo/RG-SAN" target="_blank">Code</a></div>
+        </div>
+      </div>
+
+        </div>
+      </div>
+
+      <!-- ===== 2024 ===== -->
+      <div class="year-group">
+        <div class="year-toggle open" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+          <span class="year-label">2024</span><span class="year-count">7</span><span class="year-arrow">▼</span>
+        </div>
+        <div class="year-body open">
+
+      <div class="pub-item fade-in">
+        <img src="./imgs/conference/RMSIN.png" alt="">
+        <div class="info">
+          <div class="title">Rotated Multi-Scale Interaction Network for Referring Remote Sensing Image Segmentation</div>
+          <div class="authors">Sihan Liu, Yiwei Ma, Xiaoqing Zhang, <span class="me">Haowei Wang</span>, Jiayi Ji, Xiaoshuai Sun, Rongrong Ji</div>
+          <div class="venue">CVPR 2024</div>
+          <div class="links"><a href="https://arxiv.org/abs/2312.12470" target="_blank">arXiv</a><a href="https://openaccess.thecvf.com/content/CVPR2024/papers/Liu_Rotated_Multi-Scale_Interaction_Network_for_Referring_Remote_Sensing_Image_Segmentation_CVPR_2024_paper.pdf" target="_blank">PDF</a></div>
+        </div>
+      </div>
+
+      <div class="pub-item fade-in">
+        <img src="./imgs/conference/JM3D-LLM.png" alt="">
+        <div class="info">
+          <div class="title">JM3D & JM3D-LLM: Elevating 3D Representation with Joint Multi-modal Cues</div>
+          <div class="authors">Jiayi Ji, <span class="me">Haowei Wang</span>, Changli Wu, Yiwei Ma, Xiaoshuai Sun, Rongrong Ji</div>
+          <div class="venue">IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI), 2024</div>
+          <div class="links"><a href="https://arxiv.org/abs/2310.09503" target="_blank">arXiv</a><a href="https://github.com/Mr-Neko/JM3D" target="_blank">Code</a></div>
         </div>
       </div>
 
@@ -246,6 +408,55 @@
           <div class="links"><a href="https://arxiv.org/abs/2308.16632" target="_blank">arXiv</a><a href="https://github.com/sosppxo/3D-STMN" target="_blank">Code</a></div>
         </div>
       </div>
+
+      <div class="pub-item fade-in">
+        <img src="./imgs/conference/XPNG.png" alt="">
+        <div class="info">
+          <div class="title">Improving Panoptic Narrative Grounding by Harnessing Semantic Relationships and Visual Confirmation</div>
+          <div class="authors">Tianyu Guo, <span class="me">Haowei Wang</span>, Yiwei Ma, Jiayi Ji, Xiaoshuai Sun</div>
+          <div class="venue">AAAI 2024</div>
+        </div>
+      </div>
+
+      <div class="pub-item fade-in">
+        <img src="./imgs/conference/SamGuide.png" alt="">
+        <div class="info">
+          <div class="title">SAM as the Guide: Mastering Pseudo-Label Refinement in Semi-Supervised Referring Expression Segmentation</div>
+          <div class="authors">Danni Yang, Jiayi Ji, Yiwei Ma, Tianyu Guo, <span class="me">Haowei Wang</span>, Xiaoshuai Sun, Rongrong Ji</div>
+          <div class="venue">ICML 2024</div>
+          <div class="links"><a href="https://arxiv.org/abs/2406.01451" target="_blank">arXiv</a></div>
+        </div>
+      </div>
+
+      <div class="pub-item fade-in">
+        <img src="./imgs/conference/3D-GRES.png" alt="">
+        <div class="info">
+          <div class="title">3D-GRES: Generalized 3D Referring Expression Segmentation</div>
+          <div class="authors">Changli Wu, Yihang Liu, Jiayi Ji, Yiwei Ma, <span class="me">Haowei Wang</span>, Gen Luo, Henghui Ding, Xiaoshuai Sun, Rongrong Ji</div>
+          <div class="venue">ACM MM 2024 (Oral)</div>
+          <div class="links"><a href="https://arxiv.org/abs/2407.20664" target="_blank">arXiv</a><a href="https://github.com/sosppxo/MDIN" target="_blank">Code</a></div>
+        </div>
+      </div>
+
+      <div class="pub-item fade-in">
+        <img src="./imgs/conference/PhraseDiff.png" alt="">
+        <div class="info">
+          <div class="title">Exploring Phrase-Level Grounding with Text-to-Image Diffusion Model</div>
+          <div class="authors">Danni Yang, Ruohan Dong, Jiayi Ji, Yiwei Ma, <span class="me">Haowei Wang</span>, Xiaoshuai Sun, Rongrong Ji</div>
+          <div class="venue">ECCV 2024</div>
+          <div class="links"><a href="https://arxiv.org/abs/2407.05352" target="_blank">arXiv</a></div>
+        </div>
+      </div>
+
+        </div>
+      </div>
+
+      <!-- ===== 2023 ===== -->
+      <div class="year-group">
+        <div class="year-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+          <span class="year-label">2023</span><span class="year-count">4</span><span class="year-arrow">▼</span>
+        </div>
+        <div class="year-body">
 
       <div class="pub-item fade-in">
         <img src="./imgs/conference/JM3D.png" alt="">
@@ -287,25 +498,36 @@
         </div>
       </div>
 
-      <h3>Preprint</h3>
+        </div>
+      </div>
+
+      <!-- ===== Preprint ===== -->
+      <div class="year-group">
+        <div class="year-toggle open" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+          <span class="year-label">Preprint</span><span class="year-count">2</span><span class="year-arrow">▼</span>
+        </div>
+        <div class="year-body open">
 
       <div class="pub-item fade-in">
-        <img src="./imgs/conference/JM3D-LLM.png" alt="">
+        <img src="./imgs/conference/ForgeryVCR.png" alt="">
         <div class="info">
-          <div class="title">JM3D & JM3D-LLM: Elevating 3D Representation with Joint Multi-modal Cues</div>
-          <div class="authors">Jiayi Ji, <span class="me">Haowei Wang</span>, Changli Wu, Yiwei Ma, Xiaoshuai Sun, Rongrong Ji</div>
-          <div class="venue">Under review</div>
-          <div class="links"><a href="https://arxiv.org/abs/2310.09503" target="_blank">arXiv</a><a href="https://github.com/Mr-Neko/JM3D" target="_blank">Code</a></div>
+          <div class="title">ForgeryVCR: Visual-Centric Reasoning via Efficient Forensic Tools in MLLMs for Image Forgery Detection and Localization</div>
+          <div class="authors">Youqi Wang, Shen Chen, <span class="me">Haowei Wang</span>, Ruiyang Peng, Taiping Yao, Shouting Tan, Chao Chen, Bin Li, Shouhong Ding</div>
+          <div class="venue">arXiv 2026</div>
+          <div class="links"><a href="https://arxiv.org/abs/2602.14098" target="_blank">arXiv</a></div>
         </div>
       </div>
 
       <div class="pub-item fade-in">
-        <img src="./imgs/conference/NICE.png" alt="">
+        <img src="./imgs/conference/XDreamer.png" alt="">
         <div class="info">
-          <div class="title">NICE: Improving Panoptic Narrative Detection and Segmentation with Cascading Collaborative Learning</div>
-          <div class="authors"><span class="me">Haowei Wang</span>, Jiayi Ji, Tianyu Guo, Yilong Yang, Yiyi Zhou, Xiaoshuai Sun, Rongrong Ji</div>
-          <div class="venue">Under review</div>
-          <div class="links"><a href="https://arxiv.org/abs/2310.10975" target="_blank">arXiv</a><a href="https://github.com/Mr-Neko/NICE" target="_blank">Code</a></div>
+          <div class="title">X-Dreamer: Creating High-Quality 3D Content by Bridging the Domain Gap Between Text-to-2D and Text-to-3D Generation</div>
+          <div class="authors">Yiwei Ma, Yijun Fan, Jiayi Ji, <span class="me">Haowei Wang</span>, Xiaoshuai Sun, Guannan Jiang, Annan Shu, Rongrong Ji</div>
+          <div class="venue">arXiv 2023</div>
+          <div class="links"><a href="https://arxiv.org/abs/2312.00085" target="_blank">arXiv</a></div>
+        </div>
+      </div>
+
         </div>
       </div>
     </section>
