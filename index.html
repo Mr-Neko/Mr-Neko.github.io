@@ -183,6 +183,35 @@
   @keyframes ping { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(2.5); opacity: 0; } }
   .ping { animation: ping 1.5s cubic-bezier(0,0,.2,1) infinite; }
 
+  /* ========== Citation Stats ========== */
+  .cite-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 18px; }
+  .cite-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f4f9fb 100%);
+    border: 1px solid #e8ecf1; border-radius: 12px; padding: 22px 16px; text-align: center;
+    transition: transform .25s, box-shadow .25s;
+  }
+  .cite-card:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(44,83,100,.1); }
+  .cite-card .cite-number { font-size: 2.1rem; font-weight: 800; color: #2c5364; font-variant-numeric: tabular-nums; line-height: 1; }
+  .cite-card .cite-label { font-size: .8rem; color: #888; margin-top: 8px; }
+  .cite-meta { font-size: .76rem; color: #aaa; text-align: right; margin-top: 4px; }
+  .cite-meta a { color: #2c5364; text-decoration: none; }
+  .cite-trend { background: #fff; border: 1px solid #e8ecf1; border-radius: 12px; padding: 18px; }
+  .cite-trend h4 { font-size: .85rem; color: #2c5364; margin-bottom: 14px; }
+  .cite-chart { display: flex; align-items: flex-end; gap: 8px; height: 110px; }
+  .cite-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
+  .cite-bar {
+    width: 70%; max-width: 40px; border-radius: 5px 5px 0 0;
+    background: linear-gradient(180deg, #2c5364, #4ca1af);
+    transition: height 1s cubic-bezier(.4,0,.2,1); position: relative; min-height: 2px;
+  }
+  .cite-bar .tip {
+    position: absolute; top: -22px; left: 50%; transform: translateX(-50%);
+    background: #1a202c; color: #fff; font-size: .68rem; padding: 2px 6px; border-radius: 3px;
+    opacity: 0; transition: opacity .2s; white-space: nowrap;
+  }
+  .cite-bar:hover .tip { opacity: 1; }
+  .cite-collabel { font-size: .68rem; color: #999; margin-top: 6px; }
+
   /* ========== Responsive ========== */
   @media (max-width: 768px) {
     .wrapper { flex-direction: column; }
@@ -193,6 +222,7 @@
     .pub-item { flex-direction: column; }
     .pub-item img { width: 100%; height: auto; }
     .stats-grid { grid-template-columns: 1fr; }
+    .cite-grid { grid-template-columns: 1fr; }
     .globe-section { flex-direction: column; }
     .globe-wrap { width: 100%; }
   }
@@ -212,6 +242,7 @@
       <a href="#biography">Biography</a>
       <a href="#news">Latest News</a>
       <a href="#publications">Publications</a>
+      <a href="#citations">Citations</a>
       <a href="#awards">Awards</a>
       <a href="#visitor-stats">Visitor Stats</a>
     </nav>
@@ -244,6 +275,17 @@
     <section id="news" class="fade-in">
       <h2>Latest News</h2>
       <!-- <div class="alert">🔍 I'm looking for a Ph.D. position. If you are interested in my research and can provide full-cover funding, please contact me!</div> -->
+
+      <div class="year-group">
+        <div class="year-toggle open" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+          <span class="year-label">2026</span><span class="year-count">1</span><span class="year-arrow">▼</span>
+        </div>
+        <div class="year-body open">
+          <ul class="news-list">
+            <li><span class="date">2026</span> One paper accepted by <i>Pattern Recognition</i> (Fine-Grained Image Retrieval)</li>
+          </ul>
+        </div>
+      </div>
 
       <div class="year-group">
         <div class="year-toggle open" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
@@ -296,7 +338,7 @@
       <!-- ===== 2026 ===== -->
       <div class="year-group">
         <div class="year-toggle open" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
-          <span class="year-label">2026</span><span class="year-count">2</span><span class="year-arrow">▼</span>
+          <span class="year-label">2026</span><span class="year-count">3</span><span class="year-arrow">▼</span>
         </div>
         <div class="year-body open">
 
@@ -317,6 +359,16 @@
           <div class="authors">Yusen Bao, Yiting Wang, Wenhui Huang, <span class="me">Haowei Wang</span>, Shen Chen, Taiping Yao, Shouhong Ding, Jizhong Zhang</div>
           <div class="venue">AAAI 2026</div>
           <div class="links"><a href="https://arxiv.org/abs/2511.13399" target="_blank">arXiv</a><a href="https://github.com/yusenbao01/TripleFDS" target="_blank">Code</a></div>
+        </div>
+      </div>
+
+      <div class="pub-item fade-in">
+        <img src="./imgs/conference/FineGrained.png" alt="">
+        <div class="info">
+          <div class="title">From Static to Adaptive Multi-View: Nuanced Expert Prompt Tuning for Fine-Grained Image Retrieval</div>
+          <div class="authors">Wenqi Liang, <span class="me">Haowei Wang</span>, Kun Zhang, Junyang Gong, Yiyang Gao, Xianzhong Tan, Lei Ma</div>
+          <div class="venue">Pattern Recognition, 2026</div>
+          <div class="links"><a href="https://www.sciencedirect.com/science/article/abs/pii/S0031320325010234" target="_blank">Paper</a></div>
         </div>
       </div>
 
@@ -530,6 +582,33 @@
       </div>
 
         </div>
+      </div>
+    </section>
+
+    <!-- Citations -->
+    <section id="citations" class="fade-in">
+      <h2>📈 Citations</h2>
+      <div class="cite-grid">
+        <div class="cite-card">
+          <div class="cite-number" id="cite-total">—</div>
+          <div class="cite-label">Total Citations</div>
+        </div>
+        <div class="cite-card">
+          <div class="cite-number" id="cite-hindex">—</div>
+          <div class="cite-label">h-index</div>
+        </div>
+        <div class="cite-card">
+          <div class="cite-number" id="cite-i10">—</div>
+          <div class="cite-label">i10-index</div>
+        </div>
+      </div>
+      <div class="cite-trend">
+        <h4>Citation Trend</h4>
+        <div class="cite-chart" id="cite-chart"></div>
+      </div>
+      <div class="cite-meta">
+        Synced daily from <a href="https://scholar.google.com/citations?user=SkV_NNsAAAAJ&hl=en" target="_blank">Google Scholar</a> ·
+        Last updated: <span id="cite-updated">—</span>
       </div>
     </section>
 
@@ -955,6 +1034,70 @@ document.querySelectorAll('.sidebar nav a').forEach(a => {
     if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 });
+
+/* =============================================
+   9. CITATION STATS (from scholar_stats.json, synced daily)
+   ============================================= */
+(function() {
+  function animateCount(el, target) {
+    const dur = 1200, start = performance.now();
+    function tick(now) {
+      const p = Math.min((now - start) / dur, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * eased).toLocaleString();
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function renderChart(history) {
+    const container = document.getElementById('cite-chart');
+    if (!container) return;
+    container.innerHTML = '';
+    const data = history.slice(-12); // last 12 data points
+    const max = Math.max(...data.map(d => d.citations), 1);
+    data.forEach((d, i) => {
+      const col = document.createElement('div'); col.className = 'cite-col';
+      const bar = document.createElement('div'); bar.className = 'cite-bar'; bar.style.height = '0px';
+      const tip = document.createElement('span'); tip.className = 'tip'; tip.textContent = d.citations.toLocaleString();
+      bar.appendChild(tip);
+      const label = document.createElement('div'); label.className = 'cite-collabel';
+      label.textContent = (d.date || '').slice(5); // MM-DD
+      col.appendChild(bar); col.appendChild(label); container.appendChild(col);
+      const obs = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) {
+          setTimeout(() => { bar.style.height = (d.citations / max * 100) + 'px'; }, i * 80);
+          obs.unobserve(col);
+        }
+      }, { threshold: 0.2 });
+      obs.observe(col);
+    });
+  }
+
+  fetch('./scholar_stats.json?_=' + Date.now())
+    .then(r => r.json())
+    .then(data => {
+      const totalEl = document.getElementById('cite-total');
+      const hEl = document.getElementById('cite-hindex');
+      const i10El = document.getElementById('cite-i10');
+      const updEl = document.getElementById('cite-updated');
+      const obs = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) {
+          animateCount(totalEl, data.total_citations || 0);
+          animateCount(hEl, data.h_index || 0);
+          animateCount(i10El, data.i10_index || 0);
+          obs.disconnect();
+        }
+      }, { threshold: 0.3 });
+      obs.observe(document.getElementById('citations'));
+      if (updEl) updEl.textContent = data.last_updated || '—';
+      renderChart(data.history || []);
+    })
+    .catch(() => {
+      const t = document.getElementById('cite-total');
+      if (t) t.textContent = 'N/A';
+    });
+})();
 </script>
 </body>
 </html>
