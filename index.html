@@ -195,22 +195,62 @@
   .cite-card .cite-label { font-size: .8rem; color: #888; margin-top: 8px; }
   .cite-meta { font-size: .76rem; color: #aaa; text-align: right; margin-top: 4px; }
   .cite-meta a { color: #2c5364; text-decoration: none; }
-  .cite-trend { background: #fff; border: 1px solid #e8ecf1; border-radius: 12px; padding: 18px; }
-  .cite-trend h4 { font-size: .85rem; color: #2c5364; margin-bottom: 14px; }
-  .cite-chart { display: flex; align-items: flex-end; gap: 8px; height: 110px; }
-  .cite-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
-  .cite-bar {
-    width: 70%; max-width: 40px; border-radius: 5px 5px 0 0;
-    background: linear-gradient(180deg, #2c5364, #4ca1af);
-    transition: height 1s cubic-bezier(.4,0,.2,1); position: relative; min-height: 2px;
+  .cite-trend {
+    background: #fffdf7;
+    border: 2.5px solid #1a202c; border-radius: 14px; padding: 18px 18px 14px;
+    box-shadow: 5px 5px 0 #1a202c;
+    position: relative;
   }
-  .cite-bar .tip {
-    position: absolute; top: -22px; left: 50%; transform: translateX(-50%);
-    background: #1a202c; color: #fff; font-size: .68rem; padding: 2px 6px; border-radius: 3px;
-    opacity: 0; transition: opacity .2s; white-space: nowrap;
+  .cite-trend h4 {
+    font-size: .9rem; color: #1a202c; margin-bottom: 8px;
+    font-weight: 800; letter-spacing: .3px;
+    font-family: 'Comic Sans MS', 'Marker Felt', 'Patrick Hand', cursive;
   }
-  .cite-bar:hover .tip { opacity: 1; }
-  .cite-collabel { font-size: .68rem; color: #999; margin-top: 6px; }
+  .cite-chart-svg { width: 100%; height: 180px; display: block; }
+  .cite-chart-svg .grid-line { stroke: #e8d8b0; stroke-width: 1; stroke-dasharray: 4 4; }
+  .cite-chart-svg .axis-line { stroke: #1a202c; stroke-width: 2; stroke-linecap: round; }
+  .cite-chart-svg .area-fill { fill: #ffd86b; opacity: .55; }
+  .cite-chart-svg .line-path {
+    fill: none; stroke: #1a202c; stroke-width: 3;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 1500; stroke-dashoffset: 1500;
+    animation: draw-line 1.6s cubic-bezier(.5,.05,.3,1) forwards;
+  }
+  @keyframes draw-line { to { stroke-dashoffset: 0; } }
+  .cite-chart-svg .dot {
+    fill: #ff6b6b; stroke: #1a202c; stroke-width: 2;
+    transition: r .2s, fill .2s;
+    cursor: pointer;
+    opacity: 0;
+    animation: pop-in .35s cubic-bezier(.34,1.56,.64,1) forwards;
+  }
+  @keyframes pop-in { to { opacity: 1; } }
+  .cite-chart-svg .dot:hover { r: 7; fill: #ff8e53; }
+  .cite-chart-svg .x-label, .cite-chart-svg .y-label {
+    font-family: 'Comic Sans MS', 'Marker Felt', 'Patrick Hand', cursive;
+    font-size: 11px; fill: #555;
+  }
+  .cite-chart-svg .y-label { font-size: 10px; }
+  .cite-chart-svg .value-label {
+    font-family: 'Comic Sans MS', 'Marker Felt', 'Patrick Hand', cursive;
+    font-size: 10px; fill: #1a202c; font-weight: 700;
+    text-anchor: middle; opacity: 0;
+    animation: pop-in .35s ease forwards;
+  }
+  .cite-tooltip {
+    position: absolute; pointer-events: none;
+    background: #1a202c; color: #fff;
+    font-family: 'Comic Sans MS', 'Marker Felt', 'Patrick Hand', cursive;
+    font-size: .72rem; padding: 4px 9px;
+    border-radius: 6px; border: 2px solid #1a202c;
+    transform: translate(-50%, -130%);
+    opacity: 0; transition: opacity .15s;
+    white-space: nowrap; z-index: 5;
+  }
+  .cite-tooltip::after {
+    content: ''; position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%);
+    border: 4px solid transparent; border-top-color: #1a202c;
+  }
 
   /* ========== Responsive ========== */
   @media (max-width: 768px) {
@@ -603,8 +643,9 @@
         </div>
       </div>
       <div class="cite-trend">
-        <h4>Citation Trend</h4>
-        <div class="cite-chart" id="cite-chart"></div>
+        <h4>📈 Citation Trend (Last 12 Months)</h4>
+        <svg class="cite-chart-svg" id="cite-chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg>
+        <div class="cite-tooltip" id="cite-tooltip"></div>
       </div>
       <div class="cite-meta">
         Synced daily from <a href="https://scholar.google.com/citations?user=SkV_NNsAAAAJ&hl=en" target="_blank">Google Scholar</a> ·
@@ -1051,27 +1092,159 @@ document.querySelectorAll('.sidebar nav a').forEach(a => {
   }
 
   function renderChart(history) {
-    const container = document.getElementById('cite-chart');
-    if (!container) return;
-    container.innerHTML = '';
-    const data = history.slice(-12); // last 12 data points
-    const max = Math.max(...data.map(d => d.citations), 1);
-    data.forEach((d, i) => {
-      const col = document.createElement('div'); col.className = 'cite-col';
-      const bar = document.createElement('div'); bar.className = 'cite-bar'; bar.style.height = '0px';
-      const tip = document.createElement('span'); tip.className = 'tip'; tip.textContent = d.citations.toLocaleString();
-      bar.appendChild(tip);
-      const label = document.createElement('div'); label.className = 'cite-collabel';
-      label.textContent = (d.date || '').slice(5); // MM-DD
-      col.appendChild(bar); col.appendChild(label); container.appendChild(col);
-      const obs = new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting) {
-          setTimeout(() => { bar.style.height = (d.citations / max * 100) + 'px'; }, i * 80);
-          obs.unobserve(col);
-        }
-      }, { threshold: 0.2 });
-      obs.observe(col);
+    const svg = document.getElementById('cite-chart');
+    const tooltip = document.getElementById('cite-tooltip');
+    if (!svg) return;
+    svg.innerHTML = '';
+
+    // Aggregate by month: use the LAST data point of each month (latest cumulative count)
+    const monthMap = new Map();
+    (history || []).forEach(p => {
+      if (!p.date) return;
+      const key = p.date.slice(0, 7); // YYYY-MM
+      const prev = monthMap.get(key);
+      if (!prev || p.date > prev.date) monthMap.set(key, p);
     });
+
+    // Build last 12 months list (including months with no data → carry-forward last known)
+    const today = new Date();
+    const months = [];
+    for (let i = 11; i >= 0; i--) {
+      const d = new Date(today.getFullYear(), today.getMonth() - i, 1);
+      const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+      months.push(key);
+    }
+
+    // Carry-forward fill
+    let lastVal = null;
+    const series = months.map(m => {
+      if (monthMap.has(m)) lastVal = monthMap.get(m).citations;
+      return { month: m, citations: lastVal };
+    }).filter(p => p.citations !== null);
+
+    if (series.length === 0) {
+      svg.innerHTML = '<text x="300" y="90" text-anchor="middle" class="x-label" style="font-size:13px;">No citation history yet</text>';
+      return;
+    }
+
+    // Layout
+    const W = 600, H = 180;
+    const padL = 42, padR = 16, padT = 18, padB = 28;
+    const innerW = W - padL - padR;
+    const innerH = H - padT - padB;
+
+    const minV = Math.min(...series.map(s => s.citations));
+    const maxV = Math.max(...series.map(s => s.citations));
+    const range = Math.max(maxV - minV, 1);
+    // Add 10% headroom at top and small floor at bottom
+    const yMax = maxV + range * 0.15;
+    const yMin = Math.max(0, minV - range * 0.1);
+
+    const xAt = i => series.length === 1 ? padL + innerW / 2 : padL + (i / (series.length - 1)) * innerW;
+    const yAt = v => padT + innerH - ((v - yMin) / (yMax - yMin || 1)) * innerH;
+
+    // Y grid (4 lines)
+    const ns = 'http://www.w3.org/2000/svg';
+    for (let g = 0; g < 4; g++) {
+      const y = padT + (innerH * g / 3);
+      const line = document.createElementNS(ns, 'line');
+      line.setAttribute('class', 'grid-line');
+      line.setAttribute('x1', padL); line.setAttribute('x2', W - padR);
+      line.setAttribute('y1', y); line.setAttribute('y2', y);
+      svg.appendChild(line);
+      // Y axis label
+      const val = Math.round(yMax - (yMax - yMin) * g / 3);
+      const lbl = document.createElementNS(ns, 'text');
+      lbl.setAttribute('class', 'y-label');
+      lbl.setAttribute('x', padL - 6); lbl.setAttribute('y', y + 3);
+      lbl.setAttribute('text-anchor', 'end');
+      lbl.textContent = val.toLocaleString();
+      svg.appendChild(lbl);
+    }
+
+    // X axis line
+    const axis = document.createElementNS(ns, 'line');
+    axis.setAttribute('class', 'axis-line');
+    axis.setAttribute('x1', padL); axis.setAttribute('x2', W - padR);
+    axis.setAttribute('y1', H - padB); axis.setAttribute('y2', H - padB);
+    svg.appendChild(axis);
+
+    // Build smooth path (Catmull-Rom-ish via quadratic Bezier between midpoints)
+    const pts = series.map((s, i) => [xAt(i), yAt(s.citations)]);
+    let d = '';
+    if (pts.length === 1) {
+      d = `M ${pts[0][0]},${pts[0][1]}`;
+    } else {
+      d = `M ${pts[0][0]},${pts[0][1]}`;
+      for (let i = 1; i < pts.length; i++) {
+        const [x0, y0] = pts[i-1], [x1, y1] = pts[i];
+        const cx = (x0 + x1) / 2;
+        d += ` Q ${x0},${y0} ${cx},${(y0+y1)/2} T ${x1},${y1}`;
+      }
+    }
+
+    // Area fill
+    if (pts.length > 1) {
+      const area = document.createElementNS(ns, 'path');
+      area.setAttribute('class', 'area-fill');
+      area.setAttribute('d', d + ` L ${pts[pts.length-1][0]},${H - padB} L ${pts[0][0]},${H - padB} Z`);
+      svg.appendChild(area);
+    }
+
+    // Line
+    const line = document.createElementNS(ns, 'path');
+    line.setAttribute('class', 'line-path');
+    line.setAttribute('d', d);
+    svg.appendChild(line);
+
+    // X labels: show every 2nd month to avoid crowding
+    series.forEach((s, i) => {
+      const showLabel = (i === 0) || (i === series.length - 1) || (i % 2 === 1);
+      if (showLabel) {
+        const monthShort = s.month.slice(2); // YY-MM → "26-06"
+        const t = document.createElementNS(ns, 'text');
+        t.setAttribute('class', 'x-label');
+        t.setAttribute('x', xAt(i));
+        t.setAttribute('y', H - padB + 16);
+        t.setAttribute('text-anchor', 'middle');
+        t.textContent = monthShort;
+        svg.appendChild(t);
+      }
+    });
+
+    // Dots with tooltip
+    series.forEach((s, i) => {
+      const c = document.createElementNS(ns, 'circle');
+      c.setAttribute('class', 'dot');
+      c.setAttribute('cx', xAt(i)); c.setAttribute('cy', yAt(s.citations));
+      c.setAttribute('r', 5);
+      c.style.animationDelay = (1.6 + i * 0.05) + 's';
+      c.addEventListener('mouseenter', () => {
+        if (!tooltip) return;
+        tooltip.textContent = `${s.month}: ${s.citations.toLocaleString()}`;
+        const rect = svg.getBoundingClientRect();
+        const parentRect = svg.parentElement.getBoundingClientRect();
+        const cx = (xAt(i) / W) * rect.width + (rect.left - parentRect.left);
+        const cy = (yAt(s.citations) / H) * rect.height + (rect.top - parentRect.top);
+        tooltip.style.left = cx + 'px';
+        tooltip.style.top  = cy + 'px';
+        tooltip.style.opacity = '1';
+      });
+      c.addEventListener('mouseleave', () => {
+        if (tooltip) tooltip.style.opacity = '0';
+      });
+      svg.appendChild(c);
+    });
+
+    // Latest value label above the last dot
+    const last = series[series.length - 1];
+    const lastVL = document.createElementNS(ns, 'text');
+    lastVL.setAttribute('class', 'value-label');
+    lastVL.setAttribute('x', xAt(series.length - 1));
+    lastVL.setAttribute('y', yAt(last.citations) - 12);
+    lastVL.style.animationDelay = (1.6 + series.length * 0.05) + 's';
+    lastVL.textContent = last.citations.toLocaleString();
+    svg.appendChild(lastVL);
   }
 
   fetch('./scholar_stats.json?_=' + Date.now())
