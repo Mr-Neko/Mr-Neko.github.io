@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """
-Daily Google Scholar citation sync.
+Monthly Google Scholar citation sync.
 Fetches the public Scholar profile, recomputes total citations / h-index / i10-index
-by summing per-paper citation counts, appends a history point, and updates
-scholar_stats.json. Intended to be run once per day by a scheduled task.
+by summing per-paper citation counts, and appends one data point per month
+(replacing any existing entry from the same month) into scholar_stats.json.
+Intended to be run on the 1st of every month by GitHub Actions.
 """
 import json
 import re
@@ -31,7 +32,6 @@ def fetch_html(url: str) -> str:
 
 def parse_citation_counts(html: str):
     """Extract per-paper citation counts from the works table."""
-    # Each paper row has a 'gsc_a_ac' cell containing the citation count (or empty).
     cells = re.findall(r'class="gsc_a_ac[^"]*"[^>]*>(\d*)<', html)
     counts = [int(c) for c in cells if c.strip().isdigit()]
     return counts
@@ -63,6 +63,7 @@ def main():
 
     total, h, i10 = compute_metrics(counts)
     today = date.today().isoformat()
+    this_month = today[:7]  # YYYY-MM
 
     if STATS_PATH.exists():
         stats = json.loads(STATS_PATH.read_text())
@@ -74,12 +75,13 @@ def main():
     stats["i10_index"] = i10
     stats["last_updated"] = today
 
+    # Monthly history: keep at most one point per month (latest run wins).
     history = stats.get("history", [])
-    # Replace today's point if it already exists, else append.
-    history = [p for p in history if p.get("date") != today]
+    history = [p for p in history if (p.get("date") or "")[:7] != this_month]
     history.append({"date": today, "citations": total})
-    # Keep at most last 60 points.
-    stats["history"] = history[-60:]
+    history.sort(key=lambda p: p.get("date", ""))
+    # Keep at most last 24 monthly points (2 years).
+    stats["history"] = history[-24:]
 
     STATS_PATH.write_text(json.dumps(stats, indent=2, ensure_ascii=False) + "\n")
     print(f"OK: {today} citations={total} h={h} i10={i10} (papers={len(counts)})")
@@ -88,3 +90,4 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+

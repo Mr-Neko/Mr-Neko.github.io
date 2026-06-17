@@ -1197,19 +1197,22 @@ document.querySelectorAll('.sidebar nav a').forEach(a => {
     line.setAttribute('d', d);
     svg.appendChild(line);
 
-    // X labels: show every 2nd month to avoid crowding
+    // X labels: month abbreviation; show year prefix when crossing year boundary or first/last
+    const monthAbbr = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     series.forEach((s, i) => {
-      const showLabel = (i === 0) || (i === series.length - 1) || (i % 2 === 1);
-      if (showLabel) {
-        const monthShort = s.month.slice(2); // YY-MM → "26-06"
-        const t = document.createElementNS(ns, 'text');
-        t.setAttribute('class', 'x-label');
-        t.setAttribute('x', xAt(i));
-        t.setAttribute('y', H - padB + 16);
-        t.setAttribute('text-anchor', 'middle');
-        t.textContent = monthShort;
-        svg.appendChild(t);
-      }
+      const [yyyy, mm] = s.month.split('-');
+      const monIdx = parseInt(mm, 10) - 1;
+      const prevYear = i > 0 ? series[i-1].month.slice(0,4) : null;
+      const yearChanged = prevYear !== null && prevYear !== yyyy;
+      const showYear = (i === 0) || yearChanged;
+      const txt = showYear ? `${monthAbbr[monIdx]} '${yyyy.slice(2)}` : monthAbbr[monIdx];
+      const t = document.createElementNS(ns, 'text');
+      t.setAttribute('class', 'x-label');
+      t.setAttribute('x', xAt(i));
+      t.setAttribute('y', H - padB + 16);
+      t.setAttribute('text-anchor', 'middle');
+      t.textContent = txt;
+      svg.appendChild(t);
     });
 
     // Dots with tooltip
@@ -1221,7 +1224,9 @@ document.querySelectorAll('.sidebar nav a').forEach(a => {
       c.style.animationDelay = (1.6 + i * 0.05) + 's';
       c.addEventListener('mouseenter', () => {
         if (!tooltip) return;
-        tooltip.textContent = `${s.month}: ${s.citations.toLocaleString()}`;
+        const [yy, mm] = s.month.split('-');
+        const ttLabel = `${monthAbbr[parseInt(mm,10)-1]} ${yy}`;
+        tooltip.textContent = `${ttLabel}: ${s.citations.toLocaleString()} cites`;
         const rect = svg.getBoundingClientRect();
         const parentRect = svg.parentElement.getBoundingClientRect();
         const cx = (xAt(i) / W) * rect.width + (rect.left - parentRect.left);
