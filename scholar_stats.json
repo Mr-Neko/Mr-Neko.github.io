@@ -1,13 +1,17 @@
 {
   "scholar_id": "SkV_NNsAAAAJ",
-  "last_updated": "2026-06-17",
-  "total_citations": 517,
+  "last_updated": "2026-07-01",
+  "total_citations": 527,
   "h_index": 12,
   "i10_index": 13,
   "history": [
     {
       "date": "2026-06-17",
       "citations": 517
+    },
+    {
+      "date": "2026-07-01",
+      "citations": 527
     }
   ]
 }
